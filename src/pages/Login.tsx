@@ -2,8 +2,11 @@ import '../App.css'
 import { Stack, Button, Box, FormControl, Paper, TextField } from '@mui/material'
 import UserApi from '../api/user';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { PATH } from '../routes/path';
 
 function Login() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState<string>('');
   const [usernameError, setUsernameError] = useState<string>('');
 
@@ -14,8 +17,12 @@ function Login() {
 
   const handleLogin = async () => {
     await UserApi.login(username, password).then(response => {
-      if(response.status === 200) 
-        console.log('response', response);
+      if(response.status === 200) {
+        window.localStorage.setItem('username', response.data.email);
+        window.localStorage.setItem('password', response.data.password);
+        window.localStorage.setItem('role', response.data.role);
+        navigate(PATH.root);
+      }
     }).catch(error => console.error('error', error));
   }
 
@@ -71,4 +78,4 @@ function Login() {
   );
 }
 
-export default Login
+export default Login;
