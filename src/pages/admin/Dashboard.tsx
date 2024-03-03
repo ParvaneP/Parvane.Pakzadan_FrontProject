@@ -17,15 +17,20 @@ const Dashboard = () => {
   const [participants, setParticipants] = useState<Array<Participant>>([]);
 
   useEffect(() => {
-    UserApi.fetchUsers().then(response => {
-      if (response.status === 200) {
-        setUsers(response.data)
-      }
-    });
     if (userRole === 'Admin') {
+      UserApi.fetchUsers().then(response => {
+        if (response.status === 200) {
+          setUsers(response.data)
+        }
+      });
       ClassApi.fetchClasses().then(response => {
         if (response.status === 200) {
           setClasses(response.data);
+        }
+      });
+      ParticipantApi.fetchParticipants().then(response => {
+        if (response.status === 200) {
+          setParticipants(response.data)
         }
       });
     } else if (username) {
@@ -35,11 +40,7 @@ const Dashboard = () => {
         }
       });
     }
-    ParticipantApi.fetchParticipants().then(response => {
-      if (response.status === 200) {
-        setParticipants(response.data)
-      }
-    });  }, [])
+  }, [])
 
   return (
     <Page title={'Dashboard'}>

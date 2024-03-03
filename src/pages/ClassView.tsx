@@ -5,7 +5,8 @@ import ClassApi from '../api/class';
 import { PATH } from '../routes/path';
 import { useParams } from 'react-router-dom';
 import { Class } from '../types/user';
-import { ClassType, ClassTypeOptions } from '../utils/class'
+import { ClassType, ClassTypeOptions } from '../utils/class';
+import { format } from 'date-fns';
 
 type option = {
   id: number,
@@ -153,7 +154,7 @@ const ClassView = () => {
                   </TableCell>
 
                   <TableCell>
-                    <Typography>{new Date(value.birth_date).getDate()}</Typography>
+                    <Typography>{format(new Date(value.birth_date), 'yyyy MM dd')}</Typography>
                   </TableCell>
                 </TableRow>
               )) : (
